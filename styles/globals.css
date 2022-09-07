@@ -60,15 +60,23 @@ h1 {
 }
 
 h2 {
-	font-size: 8rem;
+	font-size: 6rem;
 	font-family: "Libre Barcode 39 Text", cursive;
 	margin: 0;
 	padding: 3rem 0;
 }
 
+main {
+	display: grid;
+	grid-template-columns: 1fr;
+	grid-template-rows: 1fr;
+	justify-content: center;
+	align-items: center;
+	column-gap: 2rem;
+}
 .movie_cover {
 	height: auto;
-	max-width: 52rem;
+	max-width: 32rem;
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -80,4 +88,108 @@ footer {
 	justify-content: center;
 	align-items: center;
 	flex-direction: column;
+}
+
+.table {
+	width: 100%;
+	text-align: left;
+	margin: 2rem 0;
+}
+
+.table th {
+	font-size: 1.2rem;
+	padding: 1rem;
+}
+
+.table,
+.table td {
+	border: 0.5px solid #121212;
+}
+
+.table td {
+	padding: 1rem;
+	border: 0.5px solid #121212;
+}
+
+.table td[role="cell"]:first-child {
+	color: rgb(144, 252, 2);
+	width: 10px;
+}
+
+.review-form {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	width: 100%;
+	padding-top: 2rem;
+}
+
+.review-form label {
+	width: 100%;
+}
+
+.review-form label input,
+.review-form label textarea {
+	width: 100%;
+}
+
+.label-group {
+	display: grid;
+	grid-template-columns: 5rem 1fr;
+	grid-template-rows: 5rem;
+	justify-content: start;
+	align-items: start;
+	width: 100%;
+	column-gap: 1rem;
+}
+
+.label-group label,
+.label-group label input {
+	width: 100%;
+	height: 100%;
+}
+
+.submit-review-btn {
+	width: 100%;
+	padding: 1rem 0;
+}
+
+label p {
+	margin: 0;
+}
+
+input[type="number"],
+textarea {
+	border: 0;
+	border: 1px solid black;
+	background-color: #101010;
+	color: rgb(144, 252, 2);
+	text-align: center;
+	border-radius: 5px;
+	-o-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	-ms-border-radius: 5px;
+}
+
+textarea {
+	text-align: left;
+	padding: 10px;
+	color: rgb(206, 206, 206);
+	height: 100%;
+}
+
+.submit-review-btn {
+	margin-top: 25px;
+	border-radius: 10px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	-ms-border-radius: 5px;
+	-o-border-radius: 5px;
+	background-color: #101010;
+	border-width: 0.5px;
+	color: rgb(206, 206, 206);
+	box-shadow: 0 5px 5px -2px #101010;
+	cursor: pointer;
 }

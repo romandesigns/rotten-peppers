@@ -11,6 +11,7 @@ export default function Document() {
 			<body>
 				<Main />
 				<NextScript />
+				<script src="https://js.pusher.com/7.2.0/pusher.min.js" />
 			</body>
 		</Html>
 	);

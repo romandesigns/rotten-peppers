@@ -1,7 +1,67 @@
 import Head from "next/head";
 import Image from "next/image";
+import React, { useMemo, useState, useEffect, useCallback } from "react";
+import axios from "axios";
+import { useTable } from "react-table";
+import Pusher from "pusher-js";
 
 export default function Home() {
+	const [rating, setRating] = useState(0);
+	const [description, setDescription] = useState("");
+	const [newData, setNewData] = useState([
+		{
+			col1: "1",
+			col2: "Great movie",
+		},
+		{
+			col1: "2",
+			col2: "I love it",
+		},
+	]);
+
+	const data = useMemo(() => newData, [newData]);
+
+	const columns = useMemo(
+		() => [
+			{
+				Header: "Rating",
+				accessor: "col1", // accessor is the "key" in the data
+			},
+			{
+				Header: "Review",
+				accessor: "col2",
+			},
+		],
+		[],
+	);
+
+	const tableInstance = useTable({ columns, data });
+	const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } = tableInstance;
+
+	const handleSubmit = async (e) => {
+		e.preventDefault();
+		const body = {
+			col1: rating,
+			col2: description,
+		};
+		const { data } = await axios.post("/api/movie-review", body, { "content-type": "text/json" });
+		console.log(data);
+	};
+
+	const foo = useCallback(() => {
+		const pusher = new Pusher(process.env.KEY, {
+			cluster: process.env.CLUSTER,
+		});
+		const channel = pusher.subscribe("movie-review");
+		channel.bind("new-review", function (data) {
+			setNewData([...newData, data.data]);
+		});
+	}, [newData]);
+
+	useEffect(() => {
+		foo();
+	}, [foo]);
+
 	return (
 		<>
 			<Head>
@@ -19,6 +79,51 @@ export default function Home() {
 					<div className="movie_cover">
 						<h2>SINGULARITY</h2>
 						<Image src="/wallpaperflare.com_wallpaper.jpg" width={640} height={420} alt="Mobie Cover" />
+					</div>
+
+					<div>
+						<form className="review-form" onSubmit={handleSubmit}>
+							<div className="label-group">
+								<label htmlFor="rating">
+									<p>Rating:</p>
+									<input type="number" name="rating" id="rating" min={-5} max={5} onChange={(e) => setRating(e.target.value)} />
+								</label>
+								<label htmlFor="description">
+									<p>Description:</p>
+									<textarea type="text" name="description" id="description" onChange={(e) => setDescription(e.target.value)} />
+								</label>
+							</div>
+							<input type="submit" value="Add" className="submit-review-btn" />
+						</form>
+						<table {...getTableProps()} className="table">
+							<thead>
+								{headerGroups.map((headerGroup, index) => (
+									<tr {...headerGroup.getHeaderGroupProps()} key={index}>
+										{headerGroup.headers.map((column, index) => (
+											<th {...column.getHeaderProps()} key={index}>
+												{column.render("Header")}
+											</th>
+										))}
+									</tr>
+								))}
+							</thead>
+							<tbody {...getTableBodyProps()}>
+								{rows.map((row, index) => {
+									prepareRow(row);
+									return (
+										<tr {...row.getRowProps()} key={index}>
+											{row.cells.map((cell, index) => {
+												return (
+													<td {...cell.getCellProps()} key={index}>
+														{cell.render("Cell")}
+													</td>
+												);
+											})}
+										</tr>
+									);
+								})}
+							</tbody>
+						</table>
 					</div>
 				</main>
 
