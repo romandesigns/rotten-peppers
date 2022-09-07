@@ -50,7 +50,7 @@ export default function Home() {
 
 	const foo = useCallback(() => {
 		const pusher = new Pusher("8ff7fa3c88124600cbf5", {
-			cluster: process.env.CLUSTER,
+			cluster: "us2",
 		});
 		const channel = pusher.subscribe("movie-review");
 		channel.bind("new-review", function (data) {
