@@ -19,8 +19,6 @@ export default function Home() {
 		},
 	]);
 
-	const data = useMemo(() => newData, [newData]);
-
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		const body = {
@@ -86,7 +84,7 @@ export default function Home() {
 								</tr>
 							</thead>
 							<tbody>
-								{data.map((coldata) => (
+								{newData.map((coldata) => (
 									<tr key={coldata.col1}>
 										<td>{coldata.col1}</td>
 										<td>{coldata.col2}</td>
