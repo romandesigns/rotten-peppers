@@ -84,8 +84,8 @@ export default function Home() {
 								</tr>
 							</thead>
 							<tbody>
-								{newData.map((coldata) => (
-									<tr key={coldata.col1}>
+								{newData.map((coldata, index) => (
+									<tr key={index}>
 										<td>{coldata.col1}</td>
 										<td>{coldata.col2}</td>
 									</tr>
