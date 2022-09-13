@@ -21,23 +21,6 @@ export default function Home() {
 
 	const data = useMemo(() => newData, [newData]);
 
-	const columns = useMemo(
-		() => [
-			{
-				Header: "Rating",
-				accessor: "col1", // accessor is the "key" in the data
-			},
-			{
-				Header: "Review",
-				accessor: "col2",
-			},
-		],
-		[],
-	);
-
-	const tableInstance = useTable({ columns, data });
-	const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } = tableInstance;
-
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		const body = {
@@ -95,33 +78,20 @@ export default function Home() {
 							</div>
 							<input type="submit" value="Add" className="submit-review-btn" />
 						</form>
-						<table {...getTableProps()} className="table">
+						<table className="table">
 							<thead>
-								{headerGroups.map((headerGroup, index) => (
-									<tr {...headerGroup.getHeaderGroupProps()} key={index}>
-										{headerGroup.headers.map((column, index) => (
-											<th {...column.getHeaderProps()} key={index}>
-												{column.render("Header")}
-											</th>
-										))}
+								<tr>
+									<th>Rating</th>
+									<th>Reviews</th>
+								</tr>
+							</thead>
+							<tbody>
+								{data.map((coldata) => (
+									<tr key={coldata.col1}>
+										<td>{coldata.col1}</td>
+										<td>{coldata.col2}</td>
 									</tr>
 								))}
-							</thead>
-							<tbody {...getTableBodyProps()}>
-								{rows.map((row, index) => {
-									prepareRow(row);
-									return (
-										<tr {...row.getRowProps()} key={index}>
-											{row.cells.map((cell, index) => {
-												return (
-													<td {...cell.getCellProps()} key={index}>
-														{cell.render("Cell")}
-													</td>
-												);
-											})}
-										</tr>
-									);
-								})}
 							</tbody>
 						</table>
 					</div>
